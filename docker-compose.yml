@@ -1,0 +1,50 @@
+version: '3'
+services:
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+    container_name: mongo
+    network_mode: host
+  userservice:
+    image: userservice
+    build: springboot_test/
+    restart: always
+    container_name: userservice1
+    network_mode: host
+    ports:
+      - "8082:8082"
+    expose:
+      - 8082
+  configservice:
+    image: configservice
+    build: spring-config-server/
+    restart: always
+    container_name: configservice1
+    network_mode: host
+    ports:
+      - "9999:9999"
+    expose:
+      - 9999
+  zuul:
+    image: zuul
+    build: zuulservice/
+    restart: always
+    container_name: zuulservice1
+    network_mode: host
+    ports:
+      - "8090:8090"
+    expose:
+      - 8090
+  eureka:
+    image: eurekaserver
+    build: spring-eureka-server/
+    restart: always
+    container_name: eurekaservice2
+    network_mode: host
+    ports:
+      - "8761:8761"
+    expose:
+      - 8761
+
+
